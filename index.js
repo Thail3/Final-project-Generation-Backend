@@ -3,15 +3,19 @@ import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import activityRoute from "./routes/activity.js";
 import userRoute from "./routes/user.js";
-import dotenv from "dotenv";
 import cors from "cors";
+import config from "./config.js"
 
 const app = express();
-dotenv.config();
 
 const connect = async () => {
   try {
-    await mongoose.connect(process.env.MONGO);
+    await mongoose.connect(config.mongo);
+    // await mongoose.connect(config.mongodb.uri, {
+    //   user: config.mongodb.username,
+    //   pass: config.mongodb.password,
+    //   retryWrites: true,
+    // });
     console.log("Connected to MongoDB");
   } catch (error) {
     throw error;
@@ -34,7 +38,7 @@ app.use("/auth", authRoute);
 app.use("/activity", activityRoute);
 app.use("/users", userRoute);
 
-const port = process.env.PORT || 8000
+const port = config.port || 8000
 app.listen(port, () => {
   connect();
   console.log("Server is running on port", port);
