@@ -33,6 +33,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    cloudinary_id: {
+      type: String,
+    },
     token: {
       type: String,
     },
