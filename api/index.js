@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import config from "../config.js";
 import mongoose from "mongoose";
+import auth from '../middleware/auth.js'
 
 const app = express();
 dotenv.config();
@@ -24,7 +25,8 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 app.use("/auth", authRoute);
 
-app.use("/activity", activityRoute);
+
+app.use("/activity", auth, activityRoute);
 app.use("/users", userRoute);
 
 export default app;

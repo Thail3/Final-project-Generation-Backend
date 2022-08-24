@@ -23,7 +23,9 @@ export const createUser = async (req, res, next) => {
     // console.log(result);
 
     if (oldUser) {
-      return res.status(409).send("User already exist. Please login");
+      return res
+        .status(409)
+        .send({ message: "User already exist. Please login" });
     }
 
     // Create user in our database

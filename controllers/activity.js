@@ -12,7 +12,17 @@ export const getActivities = async (req, res, next) => {
     if (type === undefined) {
       console.log("type ไม่มีค่า");
       // const activities = await Activity.find();
-      paginationActivity = await Activity.find({})
+
+      // Get all activities
+      // const dbQuery = {}
+
+      // Get all activities without owner
+      // const dbQuery = {owner: null}
+
+      // Get all activities with owner
+      const dbQuery = { owner: req.body.owner}
+      console.log("req.body in activity.js controller : ", req.body.owner);
+      paginationActivity = await Activity.find(dbQuery)
         .skip(perPage * (pageNum - 1))
         .limit(perPage)
         .sort({
@@ -30,7 +40,7 @@ export const getActivities = async (req, res, next) => {
         });
     } else {
       console.log("type มีค่าเป็น ", type);
-      sortActivities = await Activity.find({ type: type }).sort({
+      sortActivities = await Activity.find({ type: type, owner: req.body.owner }).sort({
         createdAt: -1,
       });
       res.status(200).json(sortActivities);
